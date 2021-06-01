@@ -17,16 +17,16 @@ public class GUI extends JFrame {
 
         this.setTitle("Game of Life");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(grid_cols * (gap + cell_size), grid_rows * (gap + cell_size));
-        this.setResizable(true);
+        //this.setSize(grid_cols * (gap + cell_size), grid_rows * (gap + cell_size));
+        this.setResizable(false);
 
-
+        //##
         this.getContentPane().setBackground(Color.GRAY);
 
+        //##
+        this.getContentPane().setLayout(new GridLayout(grid_rows, grid_cols, gap, gap));
 
-        this.setLayout(new GridLayout(grid_rows, grid_cols, gap, gap));
-
-        int count = 0;
+        //int count = 0;
 
         for (int row = 0; row < grid_rows; row++) {
             for (int col = 0; col < grid_cols; col++) {
@@ -41,16 +41,16 @@ public class GUI extends JFrame {
                 if (grid.grid[row][col] == 1)
                     label.setBackground(Color.BLACK);
 
+                label.setPreferredSize(new Dimension(cell_size, cell_size));
                 label.setBounds(col * (cell_size+gap), row * (cell_size+gap), cell_size, cell_size);
-                this.add(label);
+                this.getContentPane().add(label);
 
 
             }
         }
+        this.pack();
+        this.validate();
         this.setVisible(true);
-        //this.pack();
-
-
     }
 
     public void updateGUI(Grid grid) {

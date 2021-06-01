@@ -4,7 +4,7 @@ public class GameOfLife {
 
         for (int i = 0; i < iterations; i++) {
             //grid.clearDisplayGrid(true);
-            myGUI.updateGUI(grid);
+            //myGUI.updateGUI(grid);
             grid = simulateTick(grid);
 
             try {
