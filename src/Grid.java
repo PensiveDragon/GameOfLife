@@ -22,7 +22,7 @@ public class Grid {
         System.out.println();
     }
 
-    public void clearDisplayGrid(boolean borders) {
+    public void visualiseDisplayGrid(boolean borders) {
 
         if (!borders) {
 

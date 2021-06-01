@@ -3,8 +3,8 @@ public class GameOfLife {
     private static void simulate(Grid grid, int iterations, GUI myGUI) {
 
         for (int i = 0; i < iterations; i++) {
-            //grid.clearDisplayGrid(true);
-            //myGUI.updateGUI(grid);
+            //grid.visualiseDisplayGrid(true);
+            myGUI.updateGUI(grid);
             grid = simulateTick(grid);
 
             try {
@@ -15,7 +15,7 @@ public class GameOfLife {
         }
     }
 
-    private static Grid simulateTick(Grid input) {
+    public static Grid simulateTick(Grid input) {
 
         Grid output = new Grid(input.x, input.y);
 
@@ -104,7 +104,7 @@ public class GameOfLife {
 
         GUI myGUI = new GUI(grid);
 
-        simulate(grid, iterations, myGUI);
+        //simulate(grid, iterations, myGUI);
 
 
         /*
