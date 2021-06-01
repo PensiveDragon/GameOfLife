@@ -1,10 +1,12 @@
 public class GameOfLife {
 
-    private static void simulate(Grid grid, int iterations) {
+    private static void simulate(Grid grid, int iterations, GUI myGUI) {
 
         for (int i = 0; i < iterations; i++) {
-            grid.clearDisplayGrid(true);
+            //grid.clearDisplayGrid(true);
+            myGUI.updateGUI(grid);
             grid = simulateTick(grid);
+
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
@@ -100,7 +102,9 @@ public class GameOfLife {
 
         System.out.println("Grid size (R|C): " + grid.grid.length + "|" + grid.grid[0].length);
 
-        simulate(grid, iterations);
+        GUI myGUI = new GUI(grid);
+
+        simulate(grid, iterations, myGUI);
 
 
         /*
