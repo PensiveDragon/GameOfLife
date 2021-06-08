@@ -1,79 +1,12 @@
 public class GameOfLife {
 
-    private static void simulate(Grid grid, int iterations, GUI myGUI) {
-
-        for (int i = 0; i < iterations; i++) {
-            //grid.visualiseDisplayGrid(true);
-            myGUI.updateGUI(grid);
-            grid = simulateTick(grid);
-
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                System.out.println("Main Thread Interrupted");
-            }
-        }
-    }
-
-    public static Grid simulateTick(Grid input) {
-
-        Grid output = new Grid(input.x, input.y);
-
-        // iterate 2d array, for each number:
-        for (int row = 0; row < input.x; row++) {
-            for (int col = 0; col < input.y; col++) {
-                //System.out.println("Co'ord: " + row + "|" + col);
-                // check & sum adjacent numbers (x,y +/-1)
-                //System.out.println("Sum of cells around " + row + "|" + col + " = " + sumAdjacent(input, row, col));
-                // depending on sum value, assign 1 or 0 to cell co'ord in output array.
-                output.grid[row][col] = updateCellStatus(sumAdjacent(input, row, col), input.grid[row][col]);
-                //System.out.println(row + "|" + col + " is now " + output.grid[row][col]);
-            }
-        }
-
-        return output;
-    }
-
-    private static int sumAdjacent(Grid input, int x, int y) {
-        int sum = 0;
-
-        //System.out.println("Checking: " + x + "|" + y);
-        for (int a = -1; a < 2; a++) {
-            //System.out.println("a = " + a);
-            for (int b = -1; b < 2; b++) {
-                //System.out.println("b = " + b);
-                if ((a != 0) | (b != 0)) {
-                    if (((x + a >= 0) && (y + b >= 0) && (x + a < input.x) && (y + b < input.y))) {
-                        sum += input.grid[x + a][y + b];
-                    }
-                }
-            }
-            //System.out.println("sum = " + sum + " so far...");
-        }
-
-        return sum;
-    }
-
-    private static int updateCellStatus (int neighbours, int current_status) {
-        //System.out.println("Neighbours: " + neighbours + ". Current Status: " + current_status);
-        int alive = 0;
-
-        if ((current_status == 1) & ((neighbours == 2) | (neighbours == 3)))
-            alive = 1;
-        else if ((current_status == 0) & neighbours == 3)
-            alive = 1;
-        /*
-        else if (current_status == 1)
-            alive = 0;
-        */
-        return alive;
-    }
-
     public static void main(String[] args) {
 
         System.out.println("Moo.");
 
-        int col = 50, row = 13, iterations = 50;
+        int col = 100, row = 25, iterations = 50;
+
+        // Manual grid config - retired now
 
         Grid grid = new Grid(row,col);
 
@@ -100,12 +33,83 @@ public class GameOfLife {
         grid.grid[9][4] = 1;
         grid.grid[9][5] = 1;
 
+        // Visual grid config
+        // Idea is to be able to draw a grid using . and x to symbolise alive and dead cells.
+        // Method will read the strings input, determine the parameters of the grid (length of array / longest string).
+
+        String[] strings = {
+                "......................................",
+                ".xx.....x.....xxx......x",
+                ".xx.....x....xxx.......x",
+                "...xx...x..............x",
+                "...xx.......",
+                "..........",
+                "..........",
+                "...x......",
+                ".x...x....",
+                "......x...",
+                ".x....x...",
+                "..xxxxx...",
+                "........",
+                "........",
+                "..........",
+        };
+
+        // Two of the more complicated oscillators.
+        String[] pentadecathlon = {
+                "............",
+                "............",
+                "...............xxx...xxx..",
+                "....xxx...................",
+                ".....x.......x....x.x....x",
+                ".....x.......x....x.x....x",
+                "....xxx......x....x.x....x",
+                "...............xxx...xxx..",
+                "....xxx.......................",
+                "....xxx........xxx...xxx..",
+                ".............x....x.x....x",
+                "....xxx......x....x.x....x",
+                ".....x.......x....x.x....x",
+                ".....x....................",
+                "....xxx........xxx...xxx..",
+                "...........",
+                "...........",
+                "...........",
+        };
+
+        // Maybe not 100%. Seems to create a block from the crashed glider that gets cleared from the next glider
+        String[] gospersGliderGun = {
+                "................................................",
+                "..........................x...........",
+                "..........................x.x.........",
+                ".........xx..................xx",
+                ".......x...x.................xx....xx",
+                "......x.....x................xx....xx",
+                ".xx..xx.x...x........x....x.x",
+                ".xx...x.....x.........x...x",
+                ".......x...x.....x..xxx",
+                ".........xx",
+                "..........",
+                "..........",
+                "..........",
+                "..........",
+                "..........",
+                "..........",
+                "..........",
+
+        };
+
+        //grid = grid.parseStringGridDesign(strings);
+        //grid = grid.parseStringGridDesign(gospersGliderGun);
+        grid = grid.parseStringGridDesign(pentadecathlon);
+
         System.out.println("Grid size (R|C): " + grid.grid.length + "|" + grid.grid[0].length);
 
-        GUI myGUI = new GUI(grid);
+        //grid.visualiseDisplayGrid(true);
+
+        new GUI(grid);
 
         //simulate(grid, iterations, myGUI);
-
 
         /*
         Starting Features:

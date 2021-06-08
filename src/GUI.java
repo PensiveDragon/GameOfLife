@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 public class GUI extends JFrame {
 
     int gap = 1;
-    int cell_size = 20;
+    int cell_size = 10;
     int grid_rows;
     int grid_cols;
     JLabel label;
@@ -34,15 +34,15 @@ public class GUI extends JFrame {
 
         createUIGrid(grid);
 
-        Timer timer = new Timer(1000, new ActionListener() {
+        Timer timer = new Timer(250, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 //System.out.println("I just got called by the timer!!!1");
 
-                theGrid = GameOfLife.simulateTick(theGrid);
+                theGrid = theGrid.simulateTick();
                 updateGUI(theGrid);
-                theGrid.visualiseDisplayGrid(true);
+                //theGrid.visualiseDisplayGrid(true);
 
             }
         });
@@ -82,7 +82,7 @@ public class GUI extends JFrame {
     public void updateGUI(Grid grid) {
 
         //System.out.println("Update!");
-        grid.visualiseDisplayGrid(true);
+        //grid.visualiseDisplayGrid(true);
 
         this.getContentPane().removeAll();
 
