@@ -79,7 +79,7 @@ public class GameOfLife {
 
         // Maybe not 100%. Seems to create a block from the crashed glider that gets cleared from the next glider
         String[] gospersGliderGun = {
-                "................................................",
+                ".............................................................",
                 "..........................x...........",
                 "..........................x.x.........",
                 ".........xx..................xx",
@@ -99,9 +99,9 @@ public class GameOfLife {
 
         };
 
-        grid = grid.parseStringGridDesign(strings);
+        //grid = grid.parseStringGridDesign(strings);
         //grid = grid.parseStringGridDesign(gospersGliderGun);
-        //grid = grid.parseStringGridDesign(pentadecathlon);
+        grid = grid.parseStringGridDesign(pentadecathlon);
 
         System.out.println("Grid size (R|C): " + grid.grid.length + "|" + grid.grid[0].length);
 
@@ -126,6 +126,9 @@ public class GameOfLife {
         Advanced Features:
          - After simulation is complete, allow it to be run for a specified number more iterations
          - Allow the ability to create a custom seed in the program, turning a grid of cells on/off
+         - Output paused designs into a text file that can be opened into another instance of the program.
+         - Boolean for looping grid world mode.
+         - Clear map button.
          */
     }
 }

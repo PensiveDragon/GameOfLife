@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class GUI extends JFrame implements ActionListener {
 
@@ -54,7 +56,7 @@ public class GUI extends JFrame implements ActionListener {
 
 
 
-        timer = new Timer(1000, new ActionListener() {
+        timer = new Timer(250, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -89,6 +91,7 @@ public class GUI extends JFrame implements ActionListener {
             for (int col = 0; col < grid_cols; col++) {
 
                 label = new JLabel();
+                label.addMouseListener(new GridCellMouseListener(row, col));
                 label.setBackground(Color.WHITE);
                 label.setOpaque(true);
 
@@ -145,6 +148,22 @@ public class GUI extends JFrame implements ActionListener {
                 button.setEnabled(false);
                 checkRunning();
             }
+        }
+    }
+
+    private static class GridCellMouseListener extends MouseAdapter {
+        private final int row;
+        private final int col;
+
+        public GridCellMouseListener(int row, int col) {
+            this.row = row;
+            this.col = col;
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            System.out.println("Clicked " + e);
+            System.out.println("Clicked on: " + row + "|" + col);
         }
     }
 }
