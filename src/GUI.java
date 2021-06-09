@@ -91,7 +91,7 @@ public class GUI extends JFrame implements ActionListener {
             for (int col = 0; col < grid_cols; col++) {
 
                 label = new JLabel();
-                label.addMouseListener(new GridCellMouseListener(row, col));
+                label.addMouseListener(new GridCellMouseListener(row, col, label));
                 label.setBackground(Color.WHITE);
                 label.setOpaque(true);
 
@@ -151,19 +151,41 @@ public class GUI extends JFrame implements ActionListener {
         }
     }
 
-    private static class GridCellMouseListener extends MouseAdapter {
+    private void toggleCell (int row, int col, JLabel label) {
+        System.out.println("ToggleCell called at: " + row + "|" + col);
+
+        // update array & update colour of cell
+        if (theGrid.grid[row][col] == 1) {
+            theGrid.grid[row][col] = 0;
+            label.setBackground(Color.white);
+        } else {
+            theGrid.grid[row][col] = 1;
+            label.setBackground(Color.black);
+        }
+
+
+    }
+
+    private class GridCellMouseListener extends MouseAdapter {
         private final int row;
         private final int col;
+        private final JLabel label;
 
-        public GridCellMouseListener(int row, int col) {
+        public GridCellMouseListener(int row, int col, JLabel label) {
             this.row = row;
             this.col = col;
+            this.label = label;
         }
 
         @Override
         public void mouseClicked(MouseEvent e) {
             System.out.println("Clicked " + e);
             System.out.println("Clicked on: " + row + "|" + col);
+            if (!running) {
+                toggleCell(row, col, label);
+            }
         }
+
+        //potentially more listeners
     }
 }
