@@ -99,9 +99,9 @@ public class GameOfLife {
 
         };
 
-        //grid = grid.parseStringGridDesign(strings);
+        grid = grid.parseStringGridDesign(strings);
         //grid = grid.parseStringGridDesign(gospersGliderGun);
-        grid = grid.parseStringGridDesign(pentadecathlon);
+        //grid = grid.parseStringGridDesign(pentadecathlon);
 
         System.out.println("Grid size (R|C): " + grid.grid.length + "|" + grid.grid[0].length);
 

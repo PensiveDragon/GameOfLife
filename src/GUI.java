@@ -10,11 +10,12 @@ public class GUI extends JFrame implements ActionListener {
     int grid_rows;
     int grid_cols;
     JLabel label;
-    JPanel panel;
+    JPanel panel = new JPanel();
     Grid theGrid;
     JButton button;
     Boolean running = true;
-    JPanel gridPanel;
+    JPanel gridPanel = new JPanel();
+    Timer timer;
 
 
     public GUI(Grid grid) {
@@ -34,22 +35,18 @@ public class GUI extends JFrame implements ActionListener {
         //##
         //this.getContentPane().setLayout(new GridLayout(grid_rows, grid_cols, gap, gap));
 
-        JPanel panel = new JPanel();
+
 
         button = new JButton();
 
-        button.setSize(100,50);
+        //button.setSize(100,50);
         button.addActionListener(this);
+        //button.setBounds(50,50,100,50);
 
-        if (!running)
-            button.setText("Start");
-        else
-            button.setText("Stop");
 
+
+        //panel.setLayout(null);
         panel.add(button);
-        //this.add(panel);
-
-        //int count = 0;
 
         createUIGrid(grid);
 
@@ -57,7 +54,7 @@ public class GUI extends JFrame implements ActionListener {
 
 
 
-        Timer timer = new Timer(10000, new ActionListener() {
+        timer = new Timer(1000, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -66,27 +63,27 @@ public class GUI extends JFrame implements ActionListener {
                 theGrid = theGrid.simulateTick();
                 updateGUI(theGrid);
                 //theGrid.visualiseDisplayGrid(true);
-
-
-
+                checkRunning();
             }
-
-
         });
+
+        this.add(panel);
 
         timer.start();
 
         this.pack();
         this.validate();
         this.setVisible(true);
+    }
 
-
+    private void checkRunning() {
+        if (!running)
+            timer.stop();
+        else
+            timer.start();
     }
 
     private void createUIGrid(Grid grid) {
-
-        gridPanel = new JPanel();
-
 
         for (int row = 0; row < grid_rows; row++) {
             for (int col = 0; col < grid_cols; col++) {
@@ -94,6 +91,13 @@ public class GUI extends JFrame implements ActionListener {
                 label = new JLabel();
                 label.setBackground(Color.WHITE);
                 label.setOpaque(true);
+
+                if (!running) {
+                    button.setText("Start");
+                }
+                else {
+                    button.setText("Stop");
+                }
 
                 //label.setText("" + ++count);
                 //label.setText("o");
@@ -118,8 +122,9 @@ public class GUI extends JFrame implements ActionListener {
 
         gridPanel.removeAll();
 
-        this.getContentPane().setBackground(Color.GRAY);
+        //gridPanel.setBackground(Color.GRAY);
 
+        button.setEnabled(true);
         createUIGrid(grid);
         gridPanel.repaint();
     }
@@ -131,10 +136,14 @@ public class GUI extends JFrame implements ActionListener {
             if (running) {
                 running = false;
                 System.out.println("stopped");
+                button.setEnabled(false);
+
             }
             else {
                 running = true;
                 System.out.println("started");
+                button.setEnabled(false);
+                checkRunning();
             }
         }
     }
