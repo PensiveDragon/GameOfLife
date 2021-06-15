@@ -136,6 +136,14 @@ public class Grid {
         return grid;
     }
 
+    public void clearGrid() {
+        for (int col = 0; col < x; col++) {
+            for (int row = 0; row < y; row++) {
+                grid[col][row] = 0;
+            }
+        }
+    }
+
     public void encodeGridSeed() {
         // some crazy way of encoding a ?x? sized grid of 0s and 1s into a more manageable format.
         // - some kind of combination of nums and chars to indicate gaps between numbers?

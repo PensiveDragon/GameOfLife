@@ -14,9 +14,11 @@ public class GUI extends JFrame implements ActionListener {
     JLabel label;
     JPanel panel = new JPanel();
     Grid theGrid;
-    JButton button;
+    JButton pauseButton;
+    JButton clearButton;
     Boolean running = true;
     JPanel gridPanel = new JPanel();
+    JPanel menuPanel = new JPanel();
     Timer timer;
 
 
@@ -37,24 +39,27 @@ public class GUI extends JFrame implements ActionListener {
         //##
         //this.getContentPane().setLayout(new GridLayout(grid_rows, grid_cols, gap, gap));
 
+        //menuPanel.setBounds(0,0,100,50);
+        menuPanel.setLayout(new GridLayout(2,1,2,2));
+        //gridPanel.setBounds(120,120,100,100);
+
+        pauseButton = new JButton();
+        pauseButton.addActionListener(this);
+
+        clearButton = new JButton();
+        clearButton.addActionListener(this);
+        clearButton.setText("Clear");
 
 
-        button = new JButton();
+        menuPanel.add(pauseButton);
+        menuPanel.add(clearButton);
+        //panel.setLayout(new GridLayout(1,2,2,2));
 
-        //button.setSize(100,50);
-        button.addActionListener(this);
-        //button.setBounds(50,50,100,50);
-
-
-
-        //panel.setLayout(null);
-        panel.add(button);
+        panel.add(menuPanel);
 
         createUIGrid(grid);
 
         panel.add(gridPanel);
-
-
 
         timer = new Timer(250, new ActionListener() {
 
@@ -96,10 +101,12 @@ public class GUI extends JFrame implements ActionListener {
                 label.setOpaque(true);
 
                 if (!running) {
-                    button.setText("Start");
+                    pauseButton.setText("Start");
+                    clearButton.setEnabled(true);
                 }
                 else {
-                    button.setText("Stop");
+                    pauseButton.setText("Stop");
+                    clearButton.setEnabled(false);
                 }
 
                 //label.setText("" + ++count);
@@ -127,7 +134,7 @@ public class GUI extends JFrame implements ActionListener {
 
         //gridPanel.setBackground(Color.GRAY);
 
-        button.setEnabled(true);
+        pauseButton.setEnabled(true);
         createUIGrid(grid);
         gridPanel.repaint();
     }
@@ -135,21 +142,30 @@ public class GUI extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==button) {
+        if (e.getSource()== pauseButton) {
             if (running) {
                 running = false;
                 System.out.println("stopped");
-                button.setEnabled(false);
+                pauseButton.setEnabled(false);
 
             }
             else {
                 running = true;
                 System.out.println("started");
-                button.setEnabled(false);
+                pauseButton.setEnabled(false);
                 checkRunning();
             }
         }
+
+        if (e.getSource()== clearButton) {
+            if (!running) {
+                theGrid.clearGrid();
+                updateGUI(theGrid);
+                gridPanel.repaint();
+            }
+        }
     }
+
 
     private void toggleCell (int row, int col, JLabel label) {
         System.out.println("ToggleCell called at: " + row + "|" + col);
@@ -162,8 +178,6 @@ public class GUI extends JFrame implements ActionListener {
             theGrid.grid[row][col] = 1;
             label.setBackground(Color.black);
         }
-
-
     }
 
     private class GridCellMouseListener extends MouseAdapter {
@@ -178,14 +192,13 @@ public class GUI extends JFrame implements ActionListener {
         }
 
         @Override
-        public void mouseClicked(MouseEvent e) {
+        public void mouseReleased(MouseEvent e) {
             System.out.println("Clicked " + e);
             System.out.println("Clicked on: " + row + "|" + col);
             if (!running) {
                 toggleCell(row, col, label);
             }
         }
-
         //potentially more listeners
     }
 }
