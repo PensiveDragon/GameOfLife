@@ -98,10 +98,10 @@ public class GameOfLife {
                 "..................................................",
         };
 
-        //grid = grid.parseStringGridDesign(strings);
+        grid = grid.parseStringGridDesign(strings);
         //grid = grid.parseStringGridDesign(gospersGliderGun);
         //grid = grid.parseStringGridDesign(pentadecathlon);
-        grid = grid.parseStringGridDesign(introScreen);
+        //grid = grid.parseStringGridDesign(introScreen);
 
         System.out.println("Grid size (R|C): " + grid.grid.length + "|" + grid.grid[0].length);
 

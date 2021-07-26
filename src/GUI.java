@@ -39,6 +39,8 @@ public class GUI extends JFrame implements ActionListener {
         //##
         //this.getContentPane().setLayout(new GridLayout(grid_rows, grid_cols, gap, gap));
 
+        //-- consider using box layout
+
         //menuPanel.setBounds(0,0,100,50);
         menuPanel.setLayout(new GridLayout(2,1,2,2));
         //gridPanel.setBounds(120,120,100,100);
